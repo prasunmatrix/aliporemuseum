@@ -1,0 +1,203 @@
+Date: 04/07/2022
+1.CREATE TABLE `matrixmedia_db_testing-app`.`categories` (`id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(255) NOT NULL , `slug` VARCHAR(255) NOT NULL , `description` TEXT NOT NULL , `image` VARCHAR(255) NOT NULL , `meta_title` VARCHAR(255) NOT NULL , `meta_description` TEXT NOT NULL , `meta_keyword` TEXT NOT NULL , `navbar_status` ENUM('1','0') NOT NULL , `status` ENUM('1','0') NOT NULL , `created_by` INT NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+Date:05/07/2022
+1.ALTER TABLE `categories` CHANGE `image` `image` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `meta_title` `meta_title` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `meta_description` `meta_description` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `meta_keyword` `meta_keyword` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+2.ALTER TABLE `categories`  ADD `is_deleted` ENUM('1','0') NOT NULL  AFTER `created_by`,  ADD `deteted_by` INT NULL DEFAULT NULL  AFTER `is_deleted`;
+3.ALTER TABLE `categories` CHANGE `is_deleted` `is_deleted` ENUM('1','0') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0';
+
+Date:06/07/2022
+1. CREATE TABLE `matrixmedia_db_testing-app`.`photo_gallery` (`id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) NOT NULL , `description` TEXT NOT NULL , `display_title` VARCHAR(255) NOT NULL , `position` INT NOT NULL COMMENT 'id of categories table' , `status` ENUM('1','0') NOT NULL , `created_by` INT NOT NULL , `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' , `deteted_by` INT NULL DEFAULT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+Date:08/07/2022
+1. CREATE TABLE `matrixmedia_db_testing-app`.`photo_gallery_image` ( `id` INT NOT NULL AUTO_INCREMENT ,  `photo_gallery_fk` INT NOT NULL COMMENT 'id of photo_gallery table' ,  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,  `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
+2.ALTER TABLE `photo_gallery_image` ADD `image` VARCHAR(255) NOT NULL AFTER `photo_gallery_fk`;
+
+Date:11/07/2022
+1. CREATE TABLE `matrixmedia_db_testing-app`.`settings` (`id` INT NOT NULL AUTO_INCREMENT , `email` VARCHAR(255) NOT NULL , `phone` VARCHAR(255) NOT NULL , `header_logo` VARCHAR(255) NOT NULL , `facebook` VARCHAR(255) NOT NULL , `youtube` VARCHAR(255) NOT NULL , `linkedin` VARCHAR(255) NOT NULL , `instagram` VARCHAR(255) NOT NULL , `twitter` VARCHAR(255) NOT NULL , `footer_logo` VARCHAR(255) NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+2. ALTER TABLE `settings` CHANGE `email` `email` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `phone` `phone` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `header_logo` `header_logo` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `footer_logo` `footer_logo` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `facebook` `facebook` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `youtube` `youtube` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `linkedin` `linkedin` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `instagram` `instagram` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL, CHANGE `twitter` `twitter` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+Date:20/07/2022
+1. CREATE TABLE `matrixmedia_db_testing-app`.`branch_details` ( `id` INT NOT NULL AUTO_INCREMENT ,  `district` VARCHAR(255) NOT NULL ,  `block` VARCHAR(255) NOT NULL ,  `gram_panchayat` VARCHAR(255) NOT NULL ,  `name_of_the_bank` VARCHAR(255) NOT NULL ,  `name_of_the_branch` VARCHAR(255) NOT NULL ,  `ifsc_code` VARCHAR(255) NOT NULL ,  `branch_code` VARCHAR(255) NOT NULL ,  `lat` DOUBLE NOT NULL ,  `long` DOUBLE NOT NULL ,  `status` ENUM('1','0') NOT NULL ,  `created_by` INT NOT NULL ,  `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' ,  `deleted_by` INT NOT NULL ,  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,  `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
+
+2. ALTER TABLE `branch_details` CHANGE `lat` `latitude` DOUBLE NOT NULL, CHANGE `long` `longitude` DOUBLE NOT NULL;
+
+3. CREATE TABLE `matrixmedia_db_testing-app`.`district_block` ( `id` INT NOT NULL AUTO_INCREMENT ,  `district_block_name` VARCHAR(255) NOT NULL ,  `master_id` INT NOT NULL ,  `status` ENUM('1','0') NOT NULL ,  `created_by` INT NOT NULL ,  `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' ,  `deleted_by` INT NOT NULL ,  `created_at` TIMESTAMP NOT NULL ,  `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,    PRIMARY KEY  (`id`)) ENGINE = InnoDB;
+
+PRASUN-Date: 22/07/2022
+1. ALTER TABLE `branch_details` CHANGE `district` `district` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'id of district_block table', CHANGE `block` `block` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'id of district_block table';
+
+2. ALTER TABLE `district_block` CHANGE `deleted_by` `deleted_by` INT(11) NULL DEFAULT NULL;
+
+3. INSERT INTO `district_block` (`id`, `district_block_name`, `master_id`, `status`, `created_by`, `is_deleted`, `deleted_by`, `created_at`, `updated_at`) VALUES (NULL, 'UTTAR DINAJPUR', '0', '1', '1', '0', NULL, current_timestamp(), current_timestamp()), (NULL, 'DAKSHIN DINAJPUR', '0', '1', '1', '0', NULL, current_timestamp(), current_timestamp());
+
+4. ALTER TABLE `district_block` DROP `master_id`;
+
+5. RENAME TABLE `matrixmedia_db_testing-app`.`district_block` TO `matrixmedia_db_testing-app`.`district`;
+
+6. ALTER TABLE `branch_details` CHANGE `block` `block` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+PRASUN-Date:25/07/2022
+1. ALTER TABLE `district` CHANGE `district_block_name` `district_name` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+Date: 25-07-2022(Amit)
+
+ALTER TABLE `photo_gallery_image` CHANGE `photo_gallery_fk` `category_id` INT(11) NOT NULL COMMENT 'id of categories table';
+
+ALTER TABLE `photo_gallery_image` ADD `title` VARCHAR(200) NULL AFTER `image`, ADD `short_desc` TEXT NULL AFTER `title`, ADD `long_desc` TEXT NOT NULL AFTER `short_desc`, ADD `status` ENUM('1','0') NOT NULL AFTER `long_desc`;
+
+ALTER TABLE photo_gallery_image AUTO_INCREMENT = 1;
+
+ALTER TABLE `photo_gallery_image` CHANGE `long_desc` `long_desc` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL;
+
+ALTER TABLE `photo_gallery_image` ADD `is_deleted` ENUM('0','1') NOT NULL DEFAULT '0' AFTER `status`;
+
+ALTER TABLE `photo_gallery_image` CHANGE `category_id` `banner_place` VARCHAR(100) NULL COMMENT 'id of categories table';
+2. ALTER TABLE `branch_details` CHANGE `deleted_by` `deleted_by` INT(11) NULL DEFAULT NULL;
+
+Amit (Date: 26-07-2022)
+
+1. ALTER TABLE `photo_gallery_image` CHANGE `banner_place` `gallery_category_id` INT(11) NULL DEFAULT NULL COMMENT 'id of gallery_category table\r\n';
+
+
+2. CREATE TABLE `gallery_category` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+3. INSERT INTO `gallery_category` (`id`, `name`) VALUES
+(1, 'Home Page Banner'),
+(2, 'Home Page Sidebar Gallery'),
+(3, 'Home Page Middle Banner');
+
+4. ALTER TABLE `gallery_category`
+  ADD PRIMARY KEY (`id`);
+
+5.  ALTER TABLE `branch_details` CHANGE `deleted_by` `deleted_by` INT(11) NULL;
+
+6. ALTER TABLE `settings` ADD `footer_title` VARCHAR(200) NULL AFTER `phone`, ADD `footer_description` TEXT NULL AFTER `footer_title`;
+
+Amit(27-July-2022)
+
+1. ALTER TABLE `settings` ADD `address` TEXT NULL AFTER `id`;
+
+2. ALTER TABLE `settings` ADD `fax` VARCHAR(200) NULL AFTER `phone`;
+
+3. CREATE TABLE `knowledge_corner` (
+  `id` int(11) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `file` varchar(250) DEFAULT NULL,
+  `status` enum('1','0') NOT NULL DEFAULT '0',
+  `created_by` int(11) NOT NULL,
+  `is_deleted` enum('1','0') NOT NULL DEFAULT '0',
+  `deleted_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+PRASUN-Date:27/07/2022
+1. CREATE TABLE `matrixmedia_db_rccb`.`event_calendar` (`id` INT NOT NULL AUTO_INCREMENT , `content` TEXT NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+PRASUN-Date:28/07/2022
+1. ALTER TABLE `gallery_category` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+2. INSERT INTO `gallery_category` (`id`, `name`) VALUES (NULL, 'Home Page Small Slide');
+3. ALTER TABLE `organisation_chart` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+4. ALTER TABLE `tender` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT, add PRIMARY KEY (`id`);
+5. ALTER TABLE `organisation_chart` CHANGE `deteted_by` `deleted_by` INT(11) NULL DEFAULT NULL;
+
+Amit-Date:28-July-2022
+
+1. 
+CREATE TABLE `organisation_chart` (
+  `id` int(11) NOT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `status` enum('1','0') NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `is_deleted` enum('1','0') NOT NULL DEFAULT '0',
+  `deteted_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+2. ALTER TABLE `organisation_chart`
+  ADD PRIMARY KEY (`id`);
+
+  3. CREATE TABLE `tender` (
+  `id` int(11) NOT NULL,
+  `tender_no` varchar(200) DEFAULT NULL,
+  `tender_subject` text DEFAULT NULL,
+  `tender_date` datetime DEFAULT NULL,
+  `last_date_of_application` datetime DEFAULT NULL,
+  `tender_notice` varchar(250) DEFAULT NULL,
+  `related_notification` varchar(200) DEFAULT NULL,
+  `status` enum('1','0') NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `is_deleted` enum('1','0') NOT NULL DEFAULT '0',
+  `deleted_by` int(11) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+PRASUN-Date:01/08/2022
+1. CREATE TABLE `matrixmedia_db_rccb`.`employee` (`id` INT NOT NULL , `emp_id` INT NOT NULL , `name` VARCHAR(255) NOT NULL , `grade` VARCHAR(255) NOT NULL , `phone` BIGINT(20) NOT NULL , `branch` VARCHAR(255) NOT NULL , `post` VARCHAR(255) NOT NULL , `status` ENUM('1','0') NOT NULL DEFAULT '1' , `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' , `deteted_by` INT NULL DEFAULT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ) ENGINE = InnoDB;
+2. ALTER TABLE `employee` ADD PRIMARY KEY(`id`);
+3. ALTER TABLE `employee` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+4. CREATE TABLE `matrixmedia_db_rccb`.`employee_leave` (`id` INT NOT NULL AUTO_INCREMENT , `emp_id` INT NOT NULL , `casual_leave` INT NOT NULL , `sick_leave` INT NOT NULL , `privilege_leave` INT NOT NULL , `maternity_leave` INT NOT NULL , `bereavement_leave` INT NOT NULL , `status` ENUM('1','0') NOT NULL DEFAULT '1' , `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' , `deteted_by` INT NULL DEFAULT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+5. CREATE TABLE `matrixmedia_db_rccb`.`employee_apply_leave` (`id` INT NOT NULL AUTO_INCREMENT , `emp_id` INT NOT NULL , `start_date` VARCHAR(255) NOT NULL , `end_date` VARCHAR(255) NOT NULL , `leave_type` ENUM('sick_leave','privilege_leave','maternity_leave','bereavement_leave') NOT NULL , `note` TEXT NOT NULL , `status` ENUM('pending','approve','rejected') NOT NULL , `is_deleted` ENUM('1','0') NOT NULL DEFAULT '0' , `deteted_by` INT NULL DEFAULT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+PRASUN-Date:08/08/2022
+1. ALTER TABLE `knowledge_corner` ADD PRIMARY KEY(`id`);
+2. ALTER TABLE `knowledge_corner` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+PRASUN-Date:11/08/2022
+1. ALTER TABLE `employee_leave` CHANGE `emp_id` `emp_id` INT(11) NULL DEFAULT NULL, CHANGE `casual_leave` `casual_leave` INT(11) NULL DEFAULT NULL, CHANGE `sick_leave` `sick_leave` INT(11) NULL DEFAULT NULL, CHANGE `privilege_leave` `privilege_leave` INT(11) NULL DEFAULT NULL, CHANGE `maternity_leave` `maternity_leave` INT(11) NULL DEFAULT NULL, CHANGE `bereavement_leave` `bereavement_leave` INT(11) NULL DEFAULT NULL;
+
+PRASUN-Date:23/08/2022
+1. ALTER TABLE `tender`  ADD `tender_type` VARCHAR(255) NULL DEFAULT NULL  AFTER `tender_subject`;
+
+PRASUN-Date:29/08/2022
+1. CREATE TABLE `matrixmedia_db_rccb`.`grievance` (`id` INT NOT NULL AUTO_INCREMENT , `complain_id` VARCHAR(255) NOT NULL , `fullname` VARCHAR(255) NOT NULL , `phone` BIGINT(20) NOT NULL , `email` VARCHAR(255) NOT NULL , `branch` VARCHAR(255) NOT NULL , `messages` VARCHAR(255) NOT NULL , `attachment` VARCHAR(255) NOT NULL , `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `updated_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+2. ALTER TABLE `grievance` CHANGE `attachment` `attachment` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+3.CREATE TABLE `matrixmedia_db_rccb`.`feedback` (
+  `id` int(11) NOT NULL,
+  `complain_id` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `phone` bigint(20) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `branch` varchar(255) NOT NULL,
+  `messages` varchar(255) NOT NULL,
+  `attachment` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+ALTER TABLE `matrixmedia_db_rccb`.`feedback` ADD PRIMARY KEY (`id`);
+
+4.ALTER TABLE `feedback` CHANGE `complain_id` `feedback_id` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, CHANGE `attachment` `attachment` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL;
+
+PRASUN-Date:30/08/2022
+1. ALTER TABLE `branch_details` ADD `atm_id` VARCHAR(255) NOT NULL AFTER `status`, ADD `atm_available` ENUM('1','0') NOT NULL AFTER `atm_id`;
+2.ALTER TABLE `branch_details` CHANGE `atm_id` `atm_id` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+
+PRASUN-Date:31/08/2022
+1. ALTER TABLE `grievance` CHANGE `messages` `messages` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+2. ALTER TABLE `feedback` CHANGE `messages` `messages` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+
+PRASUN-Date:01/09/2022
+1. ALTER TABLE `employee`  ADD `password` VARCHAR(255) NOT NULL  AFTER `name`;
+
+PRASUN-Date:08/09/2022
+1. ALTER TABLE `employee`  ADD `role` VARCHAR(255) NOT NULL  AFTER `post`;
+2. ALTER TABLE `employee` CHANGE `emp_id` `emp_id` INT(11) NULL DEFAULT NULL;
+3. ALTER TABLE `employee` CHANGE `password` `password` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `grade` `grade` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `phone` `phone` BIGINT(20) NULL DEFAULT NULL, CHANGE `post` `post` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL, CHANGE `role` `role` VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL;
+4. ALTER TABLE `employee` CHANGE `emp_id` `emp_id` VARCHAR(255) NULL DEFAULT NULL;
+
+DEBNIDHI-Date:12-10-2022
+1. ALTER TABLE `employee` ADD `email` VARCHAR(255) NULL AFTER `employee_type`;
+
+DEBNIDHI Date:14-10-2022
+1. ALTER TABLE `employee_apply_leave` CHANGE `status` `status` ENUM('pending','partially approve','approve','rejected','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+DEBNIDHI Date:21-10-2022
+1. ALTER TABLE `hire_lebel_leave_action` CHANGE `status` `status` ENUM('pending','partially approve','approve','rejected','cancel') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
