@@ -21,6 +21,7 @@ use URL;
 use Session;
 use Redirect;
 use Input;
+//use Illuminate\Support\Facades\Log;
 
 class AudioController extends Controller
 {
@@ -57,6 +58,7 @@ class AudioController extends Controller
 	public function locationFetch(request $request)  
 	{  
 		$typeId=$request->input('typeId');
+    //Log::info($typeId);
 		if($typeId)
 		{
 			$data['location_info'] = Location::where('type',$typeId)->where('is_deleted','0')->orderBy('id', 'ASC')->get();
